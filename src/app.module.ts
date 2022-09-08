@@ -8,6 +8,7 @@ import { join } from 'path';
 import { AppConfigModule } from './config/app-config.module';
 import { DatabaseService } from './config/_services/database.service';
 import { Blog } from './database/_entities/blog/blog.entity';
+import { Images } from './database/_entities/blog/images.entity';
 import { BlogModule } from './modules/blog/blog.module';
 
 @Module({
@@ -33,7 +34,7 @@ import { BlogModule } from './modules/blog/blog.module';
         password: databaseService.get('password'),
         database: databaseService.get('database'),
         // entities: [__dirname + '/**/*.entities.{js,ts}'],
-        entities: [Blog],
+        entities: [Blog, Images],
         synchronize: databaseService.get('synchronize'),
         logging: databaseService.get('logging'),
         debug: databaseService.get('debug'),

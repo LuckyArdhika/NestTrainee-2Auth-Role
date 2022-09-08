@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Images } from './images.entity';
 
 @Entity()
 export class Blog extends BaseEntity {
@@ -54,6 +56,9 @@ export class Blog extends BaseEntity {
     if (this.tags_json?.length <= 0) return [];
     return this.tags_json ? this.tags_json.split(',') : [];
   }
+
+  @OneToMany(() => Images, (image) => image.blog)
+  images: Images[];
 
   toJSON() {
     return classToPlain(this);

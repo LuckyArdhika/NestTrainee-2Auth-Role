@@ -19,4 +19,11 @@ export class CreateBlogDto {
   })
   @IsArray()
   tags: string[];
+
+  @IsNotEmpty()
+  @IsString({
+    each: true,
+  })
+  @IsArray()
+  images: string[];
 }
