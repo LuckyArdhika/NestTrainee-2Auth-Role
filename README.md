@@ -1,2 +1,4 @@
 # NestTrainee-2Auth-Role
-1. setting env file\n2. npm install\n3. npm run start:debug
+1. setting env file</br>
+2. npm install</br>
+3. npm run start:debug
