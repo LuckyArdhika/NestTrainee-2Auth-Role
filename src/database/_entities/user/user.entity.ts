@@ -7,38 +7,33 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Blog } from './blog.entity';
+import { Blog } from '../blog/blog.entity';
+import { Role } from 'src/config/role/role.enum';
 
 @Entity()
-export class Images extends BaseEntity {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty({ type: 'number' })
   id: number;
+  
+  @Column()
+  @ApiProperty({ type: 'string' })
+  name: string;
 
   @CreateDateColumn()
   @ApiProperty({ type: Date })
   created_at: Date;
 
-  @UpdateDateColumn()
-  @ApiProperty({ type: Date })
-  updated_at: Date;
-
-  @Exclude({ toPlainOnly: true })
-  @DeleteDateColumn()
-  deleted_at: Date;
+  // relational
+  @OneToMany(() => Blog, (blog) => blog.user)
+  blog: Blog[];
 
   @Column()
-  @ApiProperty()
-  name: string;
-
-  @ManyToOne(() => Blog, (blog) => blog.images)
-  blog: Blog;
-
-  @ManyToOne(() => Blog, (blog) => blog.images)
-  blogggg: Blog;
+  role: string;
 
   toJSON() {
     return classToPlain(this);

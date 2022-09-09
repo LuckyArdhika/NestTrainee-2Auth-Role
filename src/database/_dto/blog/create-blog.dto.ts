@@ -18,7 +18,7 @@ export class CreateBlogDto {
     each: true,
   })
   @IsArray()
-  tags: string[];
+  tagso: string[];
 
   @IsNotEmpty()
   @IsString({

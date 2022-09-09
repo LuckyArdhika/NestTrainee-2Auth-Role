@@ -6,12 +6,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Images } from './images.entity';
-
+import { User } from '../user/user.entity';
 @Entity()
 export class Blog extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -52,13 +53,16 @@ export class Blog extends BaseEntity {
   tags_json: string;
 
   @Expose()
-  get tags(): string[] {
+  get tagssghjsjg(): string[] { // automated executed like function name
     if (this.tags_json?.length <= 0) return [];
     return this.tags_json ? this.tags_json.split(',') : [];
   }
 
-  @OneToMany(() => Images, (image) => image.blog)
+  @OneToMany(() => Images, (image) => image.blogggg)
   images: Images[];
+
+  @ManyToOne(() => User, (user) => user.blog)
+  user: User;
 
   toJSON() {
     return classToPlain(this);

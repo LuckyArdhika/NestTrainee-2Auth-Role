@@ -16,7 +16,7 @@ export class BlogService {
   ) {}
 
   async create(createBlogDto: CreateBlogDto) {
-    const images = await this.imageRepository.save(
+    const images = await this.imageRepository.save( // save array into database?
       createBlogDto.images.map((i) => {
         return {
           name: i,
@@ -24,14 +24,19 @@ export class BlogService {
       }),
     );
 
-    return await this.blogsRepository.save({
+    console.log("imageRepository saved: ", images);
+
+    const final = await this.blogsRepository.save({
       ...createBlogDto,
       images,
-      tags_json: createBlogDto.tags.join(','),
+      tags_json: createBlogDto.tagso.join(','),
       slug:
         createBlogDto.slug ??
         createBlogDto.title.replace(/\s+/g, '-').toLowerCase(),
     });
+    console.log("Final Result: ", final);
+    // return final;
+    return await this.findOne(final.id);
   }
 
   async findAll() {
@@ -62,7 +67,7 @@ export class BlogService {
       ...blog,
       ...updateBlogDto,
       images,
-      tags_json: updateBlogDto.tags.join(','),
+      tags_json: updateBlogDto.tagso.join(','),
       slug:
         updateBlogDto.slug ??
         updateBlogDto.title.replace(/\s+/g, '-').toLowerCase(),

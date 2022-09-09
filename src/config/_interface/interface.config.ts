@@ -21,3 +21,10 @@ export interface ConfigJWTInterface {
 export interface ConfigUpload {
   upload_location: string;
 }
+
+// my own jwt token
+export interface JWTInterface {
+  id: number;
+  name: string;
+  iat: number;
+}

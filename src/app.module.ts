@@ -10,6 +10,8 @@ import { DatabaseService } from './config/_services/database.service';
 import { Blog } from './database/_entities/blog/blog.entity';
 import { Images } from './database/_entities/blog/images.entity';
 import { BlogModule } from './modules/blog/blog.module';
+import { UserModule } from './modules/user/user.module';
+import { User } from './database/_entities/user/user.entity';
 
 @Module({
   imports: [
@@ -34,7 +36,7 @@ import { BlogModule } from './modules/blog/blog.module';
         password: databaseService.get('password'),
         database: databaseService.get('database'),
         // entities: [__dirname + '/**/*.entities.{js,ts}'],
-        entities: [Blog, Images],
+        entities: [User, Blog, Images],
         synchronize: databaseService.get('synchronize'),
         logging: databaseService.get('logging'),
         debug: databaseService.get('debug'),
@@ -44,7 +46,7 @@ import { BlogModule } from './modules/blog/blog.module';
       }),
       inject: [DatabaseService],
     }),
-    BlogModule,
+    BlogModule, UserModule
   ],
 })
 export class AppModule {}

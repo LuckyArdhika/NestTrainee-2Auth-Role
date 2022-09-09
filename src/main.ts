@@ -2,6 +2,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import morgan = require('morgan');
+import * as cookieParser from 'cookie-parser'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -45,6 +47,8 @@ async function bootstrap() {
         process.env.APP_NAME + ' documentation v' + process.env.APP_VERSION,
     },
   });
+  app.use(morgan('dev'));
+  app.use(cookieParser());
   await app.listen(process.env.APP_PORT || 3001);
 }
 bootstrap();
