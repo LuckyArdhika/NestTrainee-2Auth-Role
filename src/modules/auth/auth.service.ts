@@ -31,11 +31,11 @@ constructor(
     const payload = user.toJSON(); // data mentah dari database
     console.log("payload:", typeof payload);
     console.log("[AuthService Login will returning jwt key]...");
-    const encoded = await this.jwtService.sign(payload, {secret: process.env.JWT_KEY});
-    res.cookie('authorization', encoded);
+    const encoded = await this.jwtService.sign(payload, );
+    res.cookie('access_token', encoded);
     return {
       message: "Youre logged-in",
-      bearer: encoded, // manual key declaration
+      access_token: encoded, // manual key declaration
     };
   }
 }

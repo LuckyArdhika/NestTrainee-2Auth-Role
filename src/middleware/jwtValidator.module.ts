@@ -9,7 +9,7 @@ export class JWTTools {
   static async auth(cookies): Promise<JWTInterface> {
     // authenticate user token
     try {
-      const verified: JWTInterface = await jwt.verify(cookies.authorization, process.env.JWT_KEY);
+      const verified: JWTInterface = await jwt.verify(cookies.access_token, process.env.JWT_KEY);
       console.log("Verified: ", verified);
       return verified;
     } catch (err) {

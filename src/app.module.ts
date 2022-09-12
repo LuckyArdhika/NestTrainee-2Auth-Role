@@ -15,6 +15,12 @@ import { User } from './database/_entities/user/user.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './config/role/roles.guard';
 import { AuthModule } from './modules/auth/auth.module';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+import { AuthService } from './modules/auth/auth.service';
+import { JwtStrategy } from './modules/auth/strategy/jwt.strategy';
+import { LocalStrategy } from './modules/auth/strategy/local.strategy';
+dotenv.config();
 
 @Module({
   imports: [
@@ -22,6 +28,11 @@ import { AuthModule } from './modules/auth/auth.module';
       ttl: 60,
       limit: 100,
     }),
+    // JwtModule.register({
+    //   secret: `${process.env.JWT_KEY}`,
+    //   // secretOrPrivateKey: 'thisisakey',
+    //   signOptions: { expiresIn: '30m' },
+    // }),
     MulterModule.register({
       dest: './storage/uploads',
     }),
@@ -49,11 +60,8 @@ import { AuthModule } from './modules/auth/auth.module';
       }),
       inject: [DatabaseService],
     }),
-    BlogModule, UserModule, AuthModule
+    BlogModule, AuthModule, UserModule,
   ],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  }]
+  // providers: [AuthService, JwtService, JwtStrategy, LocalStrategy]
 })
 export class AppModule {}

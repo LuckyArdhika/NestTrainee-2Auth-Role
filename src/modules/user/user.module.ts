@@ -9,17 +9,19 @@ import { RolesGuard } from 'src/config/role/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthService } from '../auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [UserController],
-  providers:  [
-    UserService, AuthService, JwtService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+  providers:  [ // you just need to import authmodule with authservice exported to prevent recreate of authservice
+    UserService,
+    //  AuthService, JwtService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
   exports: [UserService],
-  imports: [TypeOrmModule.forFeature([User, Blog, Images])],
+  imports: [AuthModule],
 })
 export class UserModule { }

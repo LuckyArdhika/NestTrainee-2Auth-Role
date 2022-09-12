@@ -10,6 +10,7 @@ export interface ConfigDatabaseInterface {
   synchronize: boolean;
   logging: boolean;
   debug: boolean;
+  jwtkey: string;
 }
 
 export interface ConfigJWTInterface {

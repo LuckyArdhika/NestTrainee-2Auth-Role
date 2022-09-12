@@ -21,7 +21,8 @@ export class DatabaseService {
       password: this.configService.get<string>('DB_PASSWORD'),
       synchronize: this.configService.get<boolean>('DB_SYNC'),
       logging: this.configService.get<boolean>('DB_LOGGING'),
-      debug: this.configService.get<boolean>('DB_DEBUG')
+      debug: this.configService.get<boolean>('DB_DEBUG'),
+      jwtkey: this.configService.get<string>('JWT_KEY')
     };
   }
 

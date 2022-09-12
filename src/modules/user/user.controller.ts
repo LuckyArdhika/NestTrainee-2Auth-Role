@@ -37,14 +37,15 @@ export class UserController {
   }
 
   @UseGuards(LocalAuthGuard) // Guard to protect route? // 401, this route has protected by guard
-  @ApiBearerAuth('JWT') // this decorator provide auth heafer with bearer scheme
+  @ApiBearerAuth('JWT') // this decorator provide auth header with bearer scheme
   @Post('/login') // login
   async login(@Req() req: Request, @Body(new ValidationPipe()) loginUserDto: CreateUserDto, @Res({passthrough: true}) res: Response ){ // @Res({passthrough: true}) res: Response // plase add some dto as validator in prod mode
     console.log("Passing user controller...");
     return await this.authService.login(loginUserDto, res); // res
   }
-
-  @UseGuards(JwtAuthGuard, RolesGuard) // validate role
+  
+  @ApiBearerAuth('JWT') // this decorator provide auth heafer with bearer scheme
+  @UseGuards(JwtAuthGuard, RolesGuard) // validate role // jwtauthguard makes unauthorized why??
   @Get('/all') // Role-play, allow for admin role, dont allow for relative user.
   @Roles(Role.Admin)
   async showByRole(@Req() req: Request, @Res({passthrough: true}) res: Response){
