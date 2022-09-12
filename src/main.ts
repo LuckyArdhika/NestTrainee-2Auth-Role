@@ -34,7 +34,7 @@ async function bootstrap() {
     .setDescription(process.env.APP_DESC)
     .setVersion(process.env.APP_VERSION)
     .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, // why didnt sent with passport?
       'JWT',
     )
     .build();

@@ -12,6 +12,9 @@ import { Images } from './database/_entities/blog/images.entity';
 import { BlogModule } from './modules/blog/blog.module';
 import { UserModule } from './modules/user/user.module';
 import { User } from './database/_entities/user/user.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './config/role/roles.guard';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -46,7 +49,11 @@ import { User } from './database/_entities/user/user.entity';
       }),
       inject: [DatabaseService],
     }),
-    BlogModule, UserModule
+    BlogModule, UserModule, AuthModule
   ],
+  providers: [{
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  }]
 })
 export class AppModule {}

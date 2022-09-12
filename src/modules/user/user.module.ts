@@ -7,11 +7,13 @@ import { Blog } from 'src/database/_entities/blog/blog.entity';
 import { Images } from 'src/database/_entities/blog/images.entity';
 import { RolesGuard } from 'src/config/role/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthService } from '../auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [UserController],
   providers:  [
-    UserService,
+    UserService, AuthService, JwtService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

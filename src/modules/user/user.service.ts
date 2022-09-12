@@ -22,14 +22,14 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto, res: Response) {
     const user = await this.userRepository.save( // save array into database?
-      {name: createUserDto.name, role: 'user'}
+      {username: createUserDto.username, password: createUserDto.password, role: 'admin'}
     );
     const sign: JWTInterface = await JWTTools.sign(user);
-    res.cookie('key', sign);
+    res.cookie('authorization', sign);
     return user; // id, name, createdAt
   }
 
-  async find(req: Request){
+  async findOne(req: Request){
     // validate jwt
     const decoded: JWTInterface = await JWTTools.auth(req.cookies);
     const user = await this.userRepository.findOneBy({
@@ -42,17 +42,32 @@ export class UserService {
   async login(req: Request, res: Response) {
     const user = await this.userRepository.findOne({
       where: {
-        name:  req.body.name
+        username:  req.body.username
       }
     });
     if (!user) return {message: "Youre not registered, please register at /user first."}; // why didnt returning this?
     const sign: JWTInterface = await JWTTools.sign(user);
-    res.cookie('key', sign);
+    res.cookie('authorization', sign);
     return {message: "Youre logged in!"};
   }
 
   async showByRole(req: Request, res: Response) { // access by admin only
     const users = await this.userRepository.find();
     return users;
+  }
+
+  // used by auth.service
+  async findOneByName(username){
+    console.log("running userService findOneByName...");
+    const user = await this.userRepository.findOne({where: {username: username}});
+    if (!user) throw new NotFoundException("Pengguna tidak ditemukan");
+    return user;
+  }
+  
+  // used by auth.service
+  async findMatchedCredentials(body){
+    console.log("running userService findMatchedCredential...");
+    const user = await this.userRepository.findOne({where: {username: body.username, password: body.password}});
+    return user;
   }
 }

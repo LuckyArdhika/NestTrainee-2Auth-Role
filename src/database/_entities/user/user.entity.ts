@@ -22,7 +22,11 @@ export class User extends BaseEntity {
   
   @Column()
   @ApiProperty({ type: 'string' })
-  name: string;
+  username: string;
+  
+  @Column()
+  @ApiProperty({ type: 'string' })
+  password: string;
 
   @CreateDateColumn()
   @ApiProperty({ type: Date })
@@ -35,6 +39,8 @@ export class User extends BaseEntity {
   @Column()
   role: string;
 
+  roles: Role[];
+  
   toJSON() {
     return classToPlain(this);
   }
